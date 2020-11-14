@@ -15,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Location from 'expo-location';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import TextTicker from 'react-native-text-ticker';
 import { fetchData } from '../utils/fetchData';
 import Detail from '../components/Detail';
 import { mainColorPairs } from '../utils/consts';
@@ -72,6 +73,7 @@ const Weather = () => {
                   : cold
               }
               style={styles.linearGradient}
+              testID="linearGradient"
             />
           </View>
           <View style={styles.container}>
@@ -97,9 +99,18 @@ const Weather = () => {
                 source={{ uri: data?.current.weather_icons[0] }}
                 style={styles.weatherIcon}
               />
-              <Text style={styles.weatherDesc}>
-                {data?.current.weather_descriptions[0]}
-              </Text>
+              <View style={styles.weatherDescContainer}>
+                <TextTicker
+                  style={styles.weatherDesc}
+                  bounce
+                  loop
+                  marqueeDelay={1000}
+                  scrollSpeed={200}
+                >
+                  {data?.current.weather_descriptions[0]}
+                </TextTicker>
+              </View>
+
               <Text style={styles.temperature}>
                 {data?.current.temperature}℃
               </Text>
@@ -181,6 +192,10 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 20,
     marginBottom: 5,
+  },
+  weatherDescContainer: {
+    width: '60%',
+    alignItems: 'center',
   },
   weatherDesc: {
     color: '#fff',

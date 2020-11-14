@@ -11,6 +11,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from 'react-query';
 import dayjs from 'dayjs';
+import TextTicker from 'react-native-text-ticker';
 import { fetchData } from '../utils/fetchData';
 import { IStackNavigation } from '../navigation/Navigation';
 
@@ -56,9 +57,15 @@ const CityCard: FC<ICityCardProps> = ({ city }) => {
             <Text style={styles.additionalInfoText}>
               {data.current.wind_dir}:{data.current.wind_speed}
             </Text>
-            <Text style={styles.additionalInfoText}>
+            <TextTicker
+              style={styles.additionalInfoText}
+              bounce
+              loop
+              marqueeDelay={1000}
+              scrollSpeed={200}
+            >
               {data.current.weather_descriptions[0]}
-            </Text>
+            </TextTicker>
           </View>
         </TouchableOpacity>
       )}
@@ -104,6 +111,7 @@ const styles = StyleSheet.create({
     color: '#4f5250',
   },
   additionalInfo: {
+    width: '40%',
     justifyContent: 'space-around',
     alignItems: 'flex-end',
   },
